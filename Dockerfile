@@ -65,8 +65,8 @@ ARG URL=
 
 # Add rar2fs start script
 
-COPY rar2fs-assets/start_rar2fs.sh /start_rar2fs.sh
-RUN /start_rar2fs.sh
+# COPY rar2fs-assets/start_rar2fs.sh /start_rar2fs.sh
+# RUN /start_rar2fs.sh
 
 COPY root/ /
 
