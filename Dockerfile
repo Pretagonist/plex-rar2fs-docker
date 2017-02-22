@@ -22,6 +22,7 @@ RUN \
       automake \
       wget \
       build-essential \
+      bash \
       git && \
 
 
