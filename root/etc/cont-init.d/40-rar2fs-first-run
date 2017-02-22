@@ -1,0 +1,35 @@
+#!/usr/bin/with-contenv bash
+
+# If we are debugging, enable trace
+if [ "${DEBUG,,}" = "true" ]; then
+  set -x
+fi
+
+# If the first run completed successfully, we are done
+if [ -e /.rar2fs-firstRunComplete ]; then
+  exit 0
+fi
+
+function getPref {
+  local key="$1"
+  
+  xmlstarlet sel -T -t -m "/Preferences" -v "@${key}" -n "${prefFile}"
+}
+
+function setPref {
+  local key="$1"
+  local value="$2"
+  
+  count="$(xmlstarlet sel -t -v "count(/Preferences/@${key})" "${prefFile}")"
+  count=$(($count + 0))
+  if [[ $count > 0 ]]; then
+    xmlstarlet ed --inplace --update "/Preferences/@${key}" -v "${value}" "${prefFile}"
+  else
+    xmlstarlet ed --inplace --insert "/Preferences"  --type attr -n "${key}" -v "${value}" "${prefFile}"
+  fi
+}
+
+rar2fs -o allow_other /data /data-unrar
+
+touch /.rar2fs-firstRunComplete
+echo "Rar2fs first run setup complete - Mounted data drive"
