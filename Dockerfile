@@ -13,8 +13,20 @@ RUN \
       curl \
       xmlstarlet \
       uuid-runtime \
-    && \
 
+
+# Get rar2fs deps
+
+RUN apt-get install -y --no-install-recommends libfuse-dev autoconf automake wget build-essential git  && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install rar2fs
+COPY rar2fs-assets/install_rar2fs.sh /tmp/
+RUN /bin/sh /tmp/install_rar2fs.sh
+RUN mkdir /data-unrar
+
+RUN \
 # Fetch and extract S6 overlay
     curl -J -L -o /tmp/s6-overlay-amd64.tar.gz https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-amd64.tar.gz && \
     tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
@@ -31,6 +43,7 @@ RUN \
     && \
 
 # Cleanup
+    apt-get remove -y autoconf build-essential git automake && \
     apt-get -y autoremove && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/* && \
@@ -47,6 +60,10 @@ ARG TAG=plexpass
 ARG URL=
 
 COPY root/ /
+
+# Add rar2fs start script
+COPY rar2fs-assets/start_rar2fs.sh /start_rar2fs.sh
+CMD ["/start_rar2fs.sh"]
 
 RUN \
 # Save version and install
