@@ -24,6 +24,6 @@ function setPref {
   fi
 }
 
-rar2fs -o allow_other /data /data-unrar
+rar2fs --seek-length=1 -o allow_other /data /data-unrar
 
 echo "Rar2fs setup complete - Mounted data drive"
