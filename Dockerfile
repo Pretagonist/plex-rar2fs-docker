@@ -20,3 +20,8 @@ RUN rm -rf /tmp/* /var/tmp/*
 
 # Add start script
 COPY rar2fs-assets/30-rar2fs-mount /etc/cont-init.d/
+
+# Volumes
+VOLUME /config
+VOLUME /data
+VOLUME /transcode
