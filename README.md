@@ -1,5 +1,10 @@
 # Docker container for the official Plex Media Server with added transparent rar support (rar2fs by hasse69)
 
+**Notice:** This repository is no longer maintained. The repository has been archived and is read-only.
+
+For ongoing maintenance and updates, please visit the active fork at (https://github.com/TheFitzZZ/plex-rar2fs-docker)[https://github.com/TheFitzZZ/plex-rar2fs-docker].
+
+
 This container is based in large parts on disaster37/docker-plex. The goal is to have this container work just as the standard pms-docker with an additional /data-unrar folder where rar2fs does its magic.
 
 Probably needs to run priviliged as it uses fuse functions.
